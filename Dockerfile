@@ -37,3 +37,4 @@ RUN printf "<VirtualHost *:80>\n\
     > /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
+RUN php artisan config:clear && php artisan cache:clear && php artisan view:clear

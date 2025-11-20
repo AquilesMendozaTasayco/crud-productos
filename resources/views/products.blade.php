@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Productos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="http://cdn.tailwindcss.com"></script>
+
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-10">
 
 <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden p-8 space-y-8 border border-gray-100">
 
-    {{-- Header con título y botón --}}
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="flex items-center gap-3">
             <div class="p-2 bg-blue-100 rounded-lg">
@@ -29,7 +29,6 @@
         </button>
     </div>
 
-    {{-- Tarjetas de estadísticas --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-5 shadow-sm">
             <div class="flex items-center gap-3">
@@ -60,7 +59,6 @@
         </div>
     </div>
 
-    {{-- Buscador --}}
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-4">
         <div class="w-full md:w-80">
             <div class="relative">
@@ -76,7 +74,6 @@
         </div>
     </div>
 
-    <!-- Tabla -->
     <div class="mt-6 border border-gray-200 rounded-xl overflow-hidden shadow-sm">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm divide-y divide-gray-200">
@@ -91,7 +88,6 @@
                 </thead>
 
                 <tbody id="products-body" class="divide-y divide-gray-100 bg-white">
-                    <!-- Skeletons o productos dinámicos -->
                 </tbody>
             </table>
         </div>
@@ -105,7 +101,6 @@
         </div>
     </div>
 
-    {{-- Paginación --}}
     <div id="pagination" class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mt-6 text-sm text-gray-700 hidden">
         <button id="prev-page"
                 class="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors duration-200 flex items-center gap-1 justify-center">
@@ -133,7 +128,6 @@
 
 </div>
 
-<!-- MODAL -->
 <div id="modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center backdrop-blur-sm z-50 transition-opacity duration-300">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 transform scale-95 opacity-0 transition-all duration-300"
          id="modal-content">
