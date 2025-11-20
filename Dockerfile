@@ -1,9 +1,8 @@
-FROM php:8.2-fpm
+FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
     unzip \
     zip \
-    git \
     curl \
     libonig-dev \
     libxml2-dev \
@@ -24,10 +23,14 @@ RUN mkdir -p storage/framework/sessions \
 
 RUN chmod -R 777 storage bootstrap/cache
 
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
+RUN a2enmod rewrite
 
-EXPOSE 10000
+RUN echo "<VirtualHost *:80>
+    DocumentRoot /var/www/html/public
+    <Directory /var/www/html/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>" > /etc/apache2/sites-available/000-default.conf
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+EXPOSE 80
