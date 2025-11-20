@@ -6,34 +6,35 @@ RUN apt-get update && apt-get install -y \
     zip \
     git \
     curl \
+    nodejs \
+    npm \
     libonig-dev \
     libxml2-dev \
     libzip-dev \
     && docker-php-ext-install pdo pdo_mysql zip
 
+# Activar mod_rewrite (necesario para Laravel)
+RUN a2enmod rewrite
+
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copiar el proyecto al contenedor
+# Establecer carpeta del proyecto
 WORKDIR /var/www/html
+
+# Copiar proyecto
 COPY . .
 
-# Instalar dependencias de Laravel
+# Instalar dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Crear carpetas necesarias del storage
-RUN mkdir -p storage/framework/sessions \
-    storage/framework/views \
-    storage/framework/cache \
-    storage/logs
+# Instalar dependencias JS + construir Vite
+RUN npm install && npm run build
 
-# Dar permisos
-RUN chmod -R 777 storage bootstrap/cache
+# Asignar permisos
+RUN chmod -R 777 storage bootstrap/cache public/build
 
-# Activar mod_rewrite para las rutas de Laravel
-RUN a2enmod rewrite
-
-# Configurar Apache para que use /public como root
+# Configurar Apache para servir Laravel desde /public
 RUN printf "<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
@@ -43,3 +44,5 @@ RUN printf "<VirtualHost *:80>\n\
 </VirtualHost>\n" > /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
+
+CMD ["apache2-foreground"]
