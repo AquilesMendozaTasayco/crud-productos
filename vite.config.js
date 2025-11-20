@@ -14,4 +14,6 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+
+    base: process.env.ASSET_URL ? process.env.ASSET_URL + '/' : '/',
 });
